@@ -27,7 +27,7 @@ But that's not all! Hyperactyl also provides you with a ton of other cool featur
  - Detailed Node Status (For Each Node In A Saperate Page)
 
 # Installation
-Please Read https://docs.hyperactyl.com For Installation.
+Please Read https://docs.hyperactyl.in For Installation.
 
 # Support
 

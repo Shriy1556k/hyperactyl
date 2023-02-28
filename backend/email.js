@@ -1,18 +1,15 @@
-const settings = require("../settings.json");
+const settings = require("../settings");
 const fetch = require("node-fetch");
 const validator = require("email-validator");
 const indexjs = require("../index.js");
 
 module.exports.load = async function(app, db) {
     app.get("/auth/email/login", async (req, res) => {
-      if (!req.query.email || !req.query.password) return res.send("<br>Missing information.<br>")
+        if (!req.query.email || !req.query.password) return res.send("Invalid Information");
         const user = await db.get(`user-${req.query.email}`);
         const passwords = await db.get(`passwords-${req.query.email}`);
         if (!user) return res.send({error: "Invalid Email or Password."});
         if (passwords !== req.query.password) return res.send({error: "Invalid Password."});
-
-        let ip = (settings.api.client.oauth2.ip["trust x-forwarded-for"] == true ? (req.headers['x-forwarded-for'] || req.connection.remoteAddress) : req.connection.remoteAddress);
-        let userip = (ip ? ip : "::1").replace(/::1/g, "::ffff:127.0.0.1").replace(/^.*:/, '');
 
         let cacheaccount = await fetch(
             `${settings.pterodactyl.domain}/api/application/users/${await db.get(`users-${req.query.email}`)}?include=servers`,
@@ -23,7 +20,6 @@ module.exports.load = async function(app, db) {
           );
         if (await cacheaccount.statusText == "Not Found") return res.send("An error has occured while attempting to get your user information.");
         cacheaccount = JSON.parse(await cacheaccount.text());
-        await db.set(`lastlogin-${req.query.email}`, Date.now());
 
         req.session.pterodactyl = cacheaccount.attributes;
         req.session.userinfo = user;
@@ -40,7 +36,30 @@ module.exports.load = async function(app, db) {
       if (await db.get(`user-${req.query.email}`)) return res.send("Already registered.");
       if (validator.validate(req.query.email) == false) return res.send("Invalid Email");
 
-     
+      let ip = (settings.api.client.oauth2.ip["trust x-forwarded-for"] == true ? (req.headers['x-forwarded-for'] || req.connection.remoteAddress) : req.connection.remoteAddress);
+      ip = (ip ? ip : "::1").replace(/::1/g, "::ffff:127.0.0.1").replace(/^.*:/, '');
+
+        let allips = await db.get("ips") ? await db.get("ips") : [];
+        let mainip = await db.get(`ip-${req.query.email}`);
+        if (mainip) {
+          if (mainip !== ip) {
+            allips = allips.filter(ip2 => ip2 !== mainip);
+            if (allips.includes(ip)) {
+              return res.send("You Cannot Create Alts!");
+            }
+            allips.push(ip);
+            await db.set("ips", allips);
+            await db.set(`ip-${req.query.email}`, ip);
+          }
+        } else {
+          if (allips.includes(ip)) {
+            return res.send("You Cannot Create Alts!");
+          }
+          allips.push(ip);
+          await db.set("ips", allips);
+          await db.set(`ip-${req.query.email}`, ip);
+        }
+        
         let usernamehash = req.query.username + makenumber(4)
         
         usernamenew = String(usernamehash);

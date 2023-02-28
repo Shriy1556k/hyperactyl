@@ -58,7 +58,7 @@
           "block": [],
 
           "_comment": "'duplicate check' is an anti-alt check by IPs.",
-          "duplicate check": false,
+          "duplicate check": true,
 
           "_comment2": "'cookie alt check' is an anti-alt check by cookies.",
           "cookie alt check": true

@@ -1,4 +1,5 @@
 const settings = require("../../settings");
+const fetch = require("node-fetch");
 
 module.exports.load = async function(app, db) {
   app.get("/api/admin", async (req,res) => {

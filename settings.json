@@ -2,7 +2,7 @@
   "version": "0.0.2",
   "defaulttheme": "Dark",
   "website": {
-    "port": 80
+    "port": 1358
   },
   "pterodactyl": {
     "domain": "",

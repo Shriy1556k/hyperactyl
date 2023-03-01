@@ -8,7 +8,7 @@ jobs:
     steps:      
     
       - name: Installating dependencies
-        run: sudo apt update -y && curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash - && nvm install 16 && apt insatll nodejs -y
+        run: sudo apt update -y && curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash - && nvm install 16 && apt-get install nodejs -y
 
         
       - name: Check out repository code

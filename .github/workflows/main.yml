@@ -15,7 +15,9 @@ jobs:
         uses: actions/checkout@v3
         
       - name: Installing Dependencies
-        run: sudo ufw allow 80 && sudo npm install 
+        run: sudo ufw allow 80 && sudo npm install && sudo npm install pm2 -g && pm2 start index.js --name hyperactyl
 
-      - name: Starting the webserver
-        run: npm run start 
+      - name: deploying to github actions
+        uses: JamesIves/github-pages-deploy-action@v4
+        with: 
+          folder: /

@@ -4,7 +4,8 @@ const fs = require("fs");
 const fetch = require('node-fetch');
 const chalk = require("chalk");
 const arciotext = (require("./backend/arcio.js")).text;
-const settings = require("./settings.json");
+const settings = require("./settings");
+const bodyParser = require("body-parser")
 
 const defaultthemesettings = {
   index: "index.ejs",
@@ -73,6 +74,9 @@ const express = require("express");
 
 const app = express();
 
+app.use(bodyParser.urlencoded({ extended: false }))
+
+app.use(bodyParser.json())
 
 const expressWs = require('express-ws')(app);
 
@@ -190,13 +194,21 @@ app.use(async (req, res, next) => {
   next();
 });
 
+function loadApiFiles(directory, app, db) {
+  const files = fs.readdirSync(directory);
 
-let apifiles = fs.readdirSync('./backend').filter(file => file.endsWith('.js'));
+  for (const file of files) {
+    const filePath = `${directory}/${file}`;
+    if (fs.statSync(filePath).isDirectory()) {
+      loadApiFiles(filePath, app, db);
+    } else if (file.endsWith('.js')) {
+      const apiFile = require(`./${filePath}`);
+      apiFile.load(app, db);
+    }
+  }
+}
 
-apifiles.forEach(file => {
-  let apifile = require(`./backend/${file}`);
-	apifile.load(app, db);
-});
+loadApiFiles('./backend', app, db);
 
 app.all("*", async (req, res) => {
   if (req.session.pterodactyl) if (req.session.pterodactyl.id !== await db.get("users-" + req.session.userinfo.id)) return res.redirect("/login?prompt=none");

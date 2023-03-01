@@ -40,37 +40,70 @@
           <!-- End Row -->
           <div class="row">
             <div class="col">
-              <div class="card-style">
-                <div class="card-header">
-                  <div class="card-title">Hyperactyl Info</div>
-                </div>
-                <div class="card-body">
                     
-                  <div class="d-flex justify-content-between align-items-center"></div>
-                    
-                  <h6 id="latest">Updating...</h6>
-                  <p>Created And Managed By ItzCrazyKns</p><br>
-                    <a href="https://github.com/hyperactyl/hyperactyl" class="main-btn primary-btn btn-sm btn-hover"><i class="fa-brands fa-github"></i> Github </a> <a>  </a>
-                    <a href="https://discord.gg/eZ2QXSVdR5" class="main-btn dark-btn btn-sm btn-hover"><i class="fa-brands fa-discord"></i> Discord </a>
-                    <script>
-                        async function getversion() {
-                            let latestversion = await fetch("/api/version")
-                            .then(response => response.json())
-                            .then(json => {
-                              document.getElementById("latest").innerHTML = `You Are Running ${(json.name == json.current_version) ? 'The Latest Version ' + json.name + ' Of Hyperactyl' : 'An Old Version ' + json.current_version  + ' Of Hyperactyl'}`;
-                            })
-                           
-                        }
-                        getversion()
-                    </script>
+    <div class="card-style">
+    <div class="card-content">
+      <h3><a>Users</a></h4>
+      <h4><a> </a></h4>
+    </div>
+    <div class="table-wrapper table-responsive">
+      <table class="table" id="table">
+        <thead>
+          <tr>
+            <th><h6>Id</h6></th>
+            <th><h6>Name</h6></th>
+            <th><h6>Email</h6></th>
+            <th><h6>Admin</h6></th>
+          </tr>
+          <!-- end table row-->
+        </thead>
+        <tbody>
+
+        </tbody>
+      </table>
+      <!-- end table -->
+    </div>
+
+  <!-- End Chart -->
+</div><br>
+
+                    <!-- end table -->
+
+                <!-- End Chart -->
               </div>
-          </div>
+            </div>
+            <!-- End Col -->
+            
+          <!-- End Row -->
           
-      </div>
+      <!-- ========== section end ========== -->
+      <script>
+        async function idk() {
+        var table = document.getElementById("table");
+        
+        fetch('/api/admin/users')
+      .then(response => response.json())
+      .then(json => {
+        for(let i = 0; i < json.length; i++) {
+        var row = table.insertRow(1);
+        var cell1 = row.insertCell(0);
+        var cell2 = row.insertCell(1);
+        var cell3 = row.insertCell(2);
+        var cell4 = row.insertCell(3);
+        cell1.innerHTML = `<p><a href="/admin/users/view?id=${json[i].id}">${json[i].id}</a></p>`;
+        cell2.innerHTML = `<p><a href="/admin/users/view?id=${json[i].id}">${json[i].username}</a></p>`;
+        cell3.innerHTML = `<p><a href="/admin/users/view?id=${json[i].id}">${json[i].email}</a></p>`;
+        cell4.innerHTML = `<p><a href="/admin/users/view?id=${json[i].id}">${json[i].admin}</a></p>`;
+        }
+      })
+        
+      }
+        idk()
+      </script>
+      <!-- ========== footer start =========== -->
       <%- include('./theme_assets/footer') %>
-</div>
-     
-</main>
+      <!-- ========== footer end =========== -->
+    </main>
     <!-- ======== main-wrapper end =========== -->
 
     <!-- ========= All Javascript files linkup ======== -->

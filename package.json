@@ -1,7 +1,12 @@
 {
   "name": "hyperactyl",
+<<<<<<< Updated upstream
   "version": "0.0.1",
   "description": "A Dashboard For Splitting Resources And Servers In Pterodactyl.",
+=======
+  "version": "0.0.2",
+  "description": "A Dashboard For Splitting Resources And Servers In Pterodactyl",
+>>>>>>> Stashed changes
   "main": "index.js",
   "scripts": {
     "test": "node index.js",
@@ -14,8 +19,12 @@
   "keywords": [
     "pterodactyl-dashboard",
     "hyperactyl",
+<<<<<<< Updated upstream
     "dashactyl",
     "client-panel"
+=======
+    "dashactyl"
+>>>>>>> Stashed changes
   ],
   "author": "ItzCrazyKns",
   "license": "MIT",

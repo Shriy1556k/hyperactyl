@@ -42,35 +42,65 @@
             <div class="col">
               <div class="card-style">
                 <div class="card-header">
-                  <div class="card-title">Hyperactyl Info</div>
+                  <div class="card-title">Userinfo</div>
                 </div>
                 <div class="card-body">
-                    
-                  <div class="d-flex justify-content-between align-items-center"></div>
-                    
-                  <h6 id="latest">Updating...</h6>
-                  <p>Created And Managed By ItzCrazyKns</p><br>
-                    <a href="https://github.com/hyperactyl/hyperactyl" class="main-btn primary-btn btn-sm btn-hover"><i class="fa-brands fa-github"></i> Github </a> <a>  </a>
-                    <a href="https://discord.gg/eZ2QXSVdR5" class="main-btn dark-btn btn-sm btn-hover"><i class="fa-brands fa-discord"></i> Discord </a>
-                    <script>
-                        async function getversion() {
-                            let latestversion = await fetch("/api/version")
-                            .then(response => response.json())
-                            .then(json => {
-                              document.getElementById("latest").innerHTML = `You Are Running ${(json.name == json.current_version) ? 'The Latest Version ' + json.name + ' Of Hyperactyl' : 'An Old Version ' + json.current_version  + ' Of Hyperactyl'}`;
-                            })
-                           
-                        }
-                        getversion()
-                    </script>
-              </div>
-          </div>
-          
+                    <div class="input-style-1">
+                        <label>Username</label>
+                        <input type="text" value="null" id="name" readonly/>
+                    </div>
+                    <div class="input-style-1">
+                        <label>ID</label>
+                        <input type="text" value="null" id="userid" readonly/>
+                    </div>
+                    <div class="input-style-1">
+                        <label>UUID</label>
+                        <input type="text" value="null" id="uuid" readonly/>
+                    </div>
+                    <div class="input-style-1">
+                        <label>Email</label>
+                        <input type="text" value="null" id="email" readonly/>
+                    </div>
+                    <div class="input-style-1">
+                        <label>Full Name</label>
+                        <input type="text" value="null" id="fullname" readonly/>
+                    </div>
+                    <div class="input-style-1">
+                        <label>Admin</label>
+                        <input type="text" value="null" id="admin" readonly/>
+                    </div>
       </div>
-      <%- include('./theme_assets/footer') %>
 </div>
-     
-</main>
+                    <!-- end table -->
+                  </div>
+                <!-- End Chart -->
+              </div>
+            </div>
+            <!-- End Col -->
+            
+          <!-- End Row -->
+          
+      <!-- ========== section end ========== -->
+      <script>
+        async function get() {
+            const query = new URLSearchParams(window.location.search)
+            fetch('/api/admin/users/details?id=' + parseInt(query.get('id')))
+      .then(response => response.json())
+      .then(json => {
+        document.getElementById('name').value=json.username
+        document.getElementById('userid').value=json.id
+        document.getElementById('email').value=json.email
+        document.getElementById('uuid').value=json.uuid
+        document.getElementById('fullname').value=`${json.first_name} ${json.last_name}`
+        document.getElementById('admin').value=json.admin
+        })
+        }
+        get()
+      </script>
+      <!-- ========== footer start =========== -->
+      <%- include('./theme_assets/footer') %>
+      <!-- ========== footer end =========== -->
+    </main>
     <!-- ======== main-wrapper end =========== -->
 
     <!-- ========= All Javascript files linkup ======== -->

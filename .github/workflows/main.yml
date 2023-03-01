@@ -7,17 +7,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:      
     
-      - name: Installating dependencies
+      - name: 📃Installating dependencies
         run: sudo apt-get update -y && sudo apt-get install nodejs -y
-
         
-      - name: Check out repository code
+      - name: 🔍Check out repository code
         uses: actions/checkout@v3
         
-      - name: Installing Dependencies
-        run: sudo ufw allow 80 && sudo npm install && sudo npm install pm2 -g && pm2 start index.js --name hyperactyl
+      - name: 🥀Installing Dependencies
+        run: npm install && npm install pm2 -g && pm2 start index.js 
 
-      - name: deploying to github actions
-        uses: JamesIves/github-pages-deploy-action@v4
-        with: 
-          folder: /
+      - name: 📡Integrating Cloudflare
+        run: cd ~ && wget https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb -O cloudflared.deb && sudo apt install ./cloudflared.deb
+        
+      - name: 🔗Hosting
+        run: sudo cloudflared tunnel --url localhost:1358 &
+        
+      - name: ✅Online for 1 mins
+        run: sleep 60

@@ -8,7 +8,7 @@ jobs:
     steps:      
     
       - name: Installating dependencies
-        run: sudo apt update -y && apt-get install nodejs -y
+        run: sudo apt-get update -y && apt-get install nodejs -y
 
         
       - name: Check out repository code

@@ -40,9 +40,6 @@
                 <div class="profile-info">
                   <div class="info">
                     <h6><%= req.session.userinfo.username%></h6>
-                    <% if (pterodactyl.root_admin == true) { %>
-                      <h6>Admin</h6>
-                      <% } %>
                     <% if(req.session.userinfo.type == "discord" || req.session.userinfo.type == "google") { %> 
                       <div class="image">
                         <img
@@ -129,7 +126,7 @@
         <div class="row align-items-center">
           <div class="col-md-6">
             <div class="title mb-30">
-              <h2>Welcome <%= req.session.userinfo.username%>!</h2>
+              <h2>Admin Dashboard</h2>
             </div>
           </div>
           <!-- end col -->
@@ -151,85 +148,8 @@
                 }
         %>
 
-      <div class="row">
-        <div class="col-xl-3 col-lg-4 col-sm-6">
-          <div class="icon-card mb-30">
-            <div class="icon purple">
-                <i class="fa-regular fa-hard-drive"></i>
-            </div>
-            <div class="content">
-              <h6 class="mb-10">Disk</h6>
-              <h3 class="text-bold mb-10"><%= disk %>MB /
-                <%= (packages ? packages.disk : 0) + extraresources.disk %>MB</h3>
-              <p class="text-sm text-success">Fetched From <strong>API</strong></p>
-              
-            </div>
-          </div>
-          <!-- End Icon Cart -->
-        </div>
-        <!-- End Col -->
-        <div class="col-xl-3 col-lg-4 col-sm-6">
-          <div class="icon-card mb-30">
-            <div class="icon success">
-              <i class="fa-solid fa-memory"></i>
-            </div>
-            <div class="content">
-              <h6 class="mb-10">Memory</h6>
-              <h3 class="text-bold mb-10"><%= ram %>MB /
-                <%= (packages ? packages.ram : 0) + extraresources.ram %>MB</h3>
-              <p class="text-sm text-success">Fetched From <strong>API</strong></p>
-            </div>
-          </div>
-          <!-- End Icon Cart -->
-        </div>
-        <!-- End Col -->
-        <div class="col-xl-3 col-lg-4 col-sm-6">
-          <div class="icon-card mb-30">
-            <div class="icon primary">
-              <i class="fa-solid fa-microchip"></i>
-            </div>
-            <div class="content">
-              <h6 class="mb-10">CPU</h6>
-              <h3 class="text-bold mb-10"><%= cpu %>% /
-                <%= (packages ? packages.cpu : 0) + extraresources.cpu %>%</h3>
-              <p class="text-sm text-success">Fetched From <strong>API</strong></p>
-            </div>
-          </div>
-          <!-- End Icon Cart -->
-        </div>
-        <!-- End Col -->
-        <div class="col-xl-3 col-lg-4 col-sm-6">
-          <div class="icon-card mb-30">
-            <div class="icon orange">
-            <i class="fa-solid fa-server"></i>
-            </div>
-            <div class="content">
-              <h6 class="mb-10">Servers</h6>
-              <h3 class="text-bold mb-10"><%= servers %> /
-                <%= (packages ? packages.servers : 0) + extraresources.servers %>
-                server<%= (packages ? packages.servers : 0) + extraresources.servers == 1 ? "" : "s" %>
-              <p class="text-sm text-success">Fetched From <strong>API</strong></p>
-            </div>
-          </div>
-          <!-- End Icon Cart -->
-        </div>
-        <!-- End Col -->
-      </div>
-      <% if (settings.custom_ads.enabled == true) { %>
-       
-        <div class="card-style-2 mb-25">
-          <div class="card-content">
-              <h4><a> Advertisement</a></h4>
-            </div>
-          <div class="card-image">
-            <a href=<%= settings.custom_ads.redirect %>>
-              <img
-                src="<%= (settings.custom_ads.pic) %>"
-              />
-            </a>
-          </div>
-        </div>
-        <% } %>
+      
+
         
             
           

@@ -1,4 +1,4 @@
-const settings = require("../settings.json");
+const settings = require("../settings");
 
 module.exports.load = async function(app, db) {
     if (settings.api.client.allow.renewsuspendsystem.enabled == true) {

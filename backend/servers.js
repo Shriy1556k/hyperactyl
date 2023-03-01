@@ -1,8 +1,8 @@
-const settings = require("../settings.json");
+const settings = require("../settings");
 const fetch = require('node-fetch');
 const indexjs = require("../index.js");
 const arciotext = (require("./arcio.js")).text;
-const adminjs = require("./admin.js");
+const adminjs = require("./admin/suspend.js");
 const renew = require("./renewal.js");
 const fs = require("fs");
 

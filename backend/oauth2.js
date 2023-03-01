@@ -81,7 +81,6 @@ module.exports.load = async function(app, db) {
         let ip = (newsettings.api.client.oauth2.ip["trust x-forwarded-for"] == true ? (req.headers['x-forwarded-for'] || req.connection.remoteAddress) : req.connection.remoteAddress);
         ip = (ip ? ip : "::1").replace(/::1/g, "::ffff:127.0.0.1").replace(/^.*:/, '');
         
-        if (newsettings.api.client.oauth2.ip.block.includes(ip)) return res.redirect(failedcallback + "?err=IPBLOCKED")
       
         if (newsettings.api.client.oauth2.ip["duplicate check"] == true) {
           let allips = await db.get("ips") || [];
@@ -90,7 +89,7 @@ module.exports.load = async function(app, db) {
             if (mainip !== ip) {
               allips = allips.filter(ip2 => ip2 !== mainip);
               if (allips.includes(ip)) {
-                return res.redirect(failedcallback + "?err=ANTIALT")
+                return res.send('You Cannot Create Alts!')
               }
               allips.push(ip);
               await db.set("ips", allips);
@@ -98,7 +97,7 @@ module.exports.load = async function(app, db) {
             }
           } else {
             if (allips.includes(ip)) {
-              return res.redirect(failedcallback + "?err=ANTIALT")
+              return res.send('You Cannot Create Alts!')
             }
             allips.push(ip);
             await db.set("ips", allips);

@@ -49,7 +49,29 @@ app.get('/auth/google', (req, res) => {
 
         if (!await db.get("users-" + userid)) {
           if (newsettings.api.client.allow.newusers == true) {
+            let ip = (settings.api.client.oauth2.ip["trust x-forwarded-for"] == true ? (req.headers['x-forwarded-for'] || req.connection.remoteAddress) : req.connection.remoteAddress);
+      ip = (ip ? ip : "::1").replace(/::1/g, "::ffff:127.0.0.1").replace(/^.*:/, '');
 
+        let allips = await db.get("ips") ? await db.get("ips") : [];
+        let mainip = await db.get(`ip-${userid}`);
+        if (mainip) {
+          if (mainip !== ip) {
+            allips = allips.filter(ip2 => ip2 !== mainip);
+            if (allips.includes(ip)) {
+              return res.send("You Cannot Create Alts!");
+            }
+            allips.push(ip);
+            await db.set("ips", allips);
+            await db.set(`ip-${userid}`, ip);
+          }
+        } else {
+          if (allips.includes(ip)) {
+            return res.send("You Cannot Create Alts!");
+          }
+          allips.push(ip);
+          await db.set("ips", allips);
+          await db.set(`ip-${userid}`, ip);
+        }
             let accountjson = await fetch(
               settings.pterodactyl.domain + "/api/application/users",
               {

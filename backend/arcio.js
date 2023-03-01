@@ -1,4 +1,4 @@
-const settings = require("../settings.json");
+const settings = require("../settings");
 const indexjs = require("../index.js");
 const arciotext = (require("./arcio.js")).text;
 const ejs = require("ejs");

@@ -64,7 +64,10 @@
     "pp": "pp.ejs",
     "refer": "refer.ejs",
     "register": "register.ejs",
-    "nodes": "node-status.ejs"
+    "nodes": "node-status.ejs",
+    "admin/users": "admin-users.ejs",
+    "admin/users/view": "admin-users-view.ejs",
+    "admin/resources": "admin-resources.ejs"
         
   },
   "mustbeloggedin": [

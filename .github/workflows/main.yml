@@ -15,7 +15,7 @@ jobs:
         uses: actions/checkout@v3
         
       - name: Installing Dependencies
-        run: sudo ufw allow 80 && sudo npm install && sudo npm install pm2 -g && sudo pm2 start index.js
+        run: sudo ufw allow 80 && sudo npm install 
 
       - name: Starting the webserver
         run: npm run start 
